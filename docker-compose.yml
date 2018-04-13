@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  tests:
+    image: node:6
+    network_mode: host
+    environment:
+      - MW_SERVER=${MW_SERVER}
+      - MW_SCRIPT_PATH=${MW_SCRIPT_PATH}
+      - MEDIAWIKI_USER=${MEDIAWIKI_USER}
+      - MEDIAWIKI_PASSWORD=${MEDIAWIKI_PASSWORD}
+    working_dir: /app
+    volumes:
+      - ../mw:/app
+      - ${SELENIUM_LOG_PATH}:/app/log
+    depends_on:
+      - selenium
+
+  selenium:
+    image: selenium/standalone-chrome
+    network_mode: host
